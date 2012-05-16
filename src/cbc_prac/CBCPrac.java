@@ -93,8 +93,14 @@ public class CBCPrac
     		//padding value to fix = i+1, get the list of fixed r
     		toFix = findFixes(i+1, d_);
     		int newR = findR(toFix, message, n, c, port, average);
+    		// d = d_ xor r, so d_ = d xor r, but d is the padding bit in this case:
     		int newD_ = (i+1)^newR;
     		d_.add(newD_);
+    		/*
+    		 * Because <d_1,.. d_n> = D(k)<c1,.. cn>
+    		 * while E(k)<m1 xor iv1,.. mn xor ivn> = <c1,.. cn>
+    		 * so mi = d_i xor ivi
+    		 */
     		m[7-i] = newD_^iv[7-i];
     		System.out.println("m[" + (8-i) + "] is: " + m[7-i] + " (hex: " + Long.toHexString(m[7-i]) + ")");
     	}
